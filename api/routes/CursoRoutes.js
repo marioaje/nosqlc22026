@@ -78,4 +78,73 @@ router.post('/', async (req, res) => {
 });
 
 
+//PUT
+router.put('/:id', async (req, res) => {
+
+    try {
+
+        const cursosObjeto = await Curso.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+
+
+        res.status(202).json(
+            {
+                codigo: 202,
+                data: cursosObjeto,
+                mensaje: "datos actualizados"
+
+            }
+        )
+
+
+    } catch (error) {
+        res.status(400).json(
+            {
+                mensaje: error.message,
+                mensajePersonalizado: "Se cayo el api"
+
+            }
+        )
+    }
+
+});
+
+
+
+//PUT
+router.delete('/:id', async (req, res) => {
+
+    try {
+
+        await Curso.findByIdAndDelete(
+            req.params.id
+        );
+
+
+        res.status(202).json(
+            {
+                codigo: 202,
+                data: req.params.id,
+                mensaje: "datos eliminados"
+
+            }
+        )
+
+
+    } catch (error) {
+        res.status(400).json(
+            {
+                mensaje: error.message,
+                mensajePersonalizado: "Se cayo el api"
+
+            }
+        )
+    }
+
+});
+
+
 module.exports = router;
